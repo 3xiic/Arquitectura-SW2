@@ -2,7 +2,9 @@ package co.edu.unbosque.sw2.checkoutservice.controller;
 
 import co.edu.unbosque.sw2.checkoutservice.model.Checkout;
 import co.edu.unbosque.sw2.checkoutservice.model.Product;
-import co.edu.unbosque.sw2.checkoutservice.service.CheckOutService;
+import co.edu.unbosque.sw2.checkoutservice.service.CheckoutInterface;
+import co.edu.unbosque.sw2.checkoutservice.service.CheckoutService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,26 +14,20 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class checkOutController implements CheckOutService {
+public class checkOutController {
 
-    ArrayList<String> paymentMethods = new ArrayList<String>(Arrays.asList("Nequi", "Cash", "Card"));
+    @Autowired
+    CheckoutService service;
 
-    @Override
-    public List<Product> getProducts() {
-        return List.of();
+    public checkOutController() {
+
     }
-    @GetMapping("/viewCheckouts")
-    @Override
-    public Checkout showCheckOut(Checkout checkout) {
-        int value = 0;
-        for (int i = 0; i < getProducts().size(); i++){
-            value += getProducts().get(i).getValue();
-        }
-        return new Checkout(
-                UUID.randomUUID().toString(),
-                "https://tiendaonline.com",
-                value,
-                paymentMethods
-        );
+
+    @GetMapping("/viewCheckout")
+    public Checkout viewCheckout() {
+           return service.showCheckOut();
+
     }
+
+
 }

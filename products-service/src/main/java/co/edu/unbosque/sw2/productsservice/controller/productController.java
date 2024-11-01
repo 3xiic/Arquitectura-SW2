@@ -3,9 +3,7 @@ package co.edu.unbosque.sw2.productsservice.controller;
 import co.edu.unbosque.sw2.productsservice.model.Product;
 import org.apache.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
 
@@ -17,10 +15,17 @@ public class productController {
         return product;
     }
 
+    @GetMapping("/getProduct")
+    public Product getProd(Product product) {
+        return product;
+    }
+
     @PostMapping("/createProduct")
-    public ResponseEntity<String> createProduct(@RequestParam int id, @RequestParam int value, @RequestParam String name, @RequestParam String description){
-        new Product(id, value, name, description);
+    public ResponseEntity<String> createProduct(@RequestBody Product product) {
+        new Product(product);
+        System.out.println("Product created");
         return ResponseEntity.ok("Creado");
+
     }
 
     public productController() {

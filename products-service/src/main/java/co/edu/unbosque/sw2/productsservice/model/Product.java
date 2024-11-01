@@ -17,6 +17,13 @@ public class Product {
     public Product() {
     }
 
+    public Product(Product product) {
+        this.id = product.id;
+        this.value = product.value;
+        this.name = product.name;
+        this.description = product.description;
+    }
+
     public int getId() {
         return id;
     }
