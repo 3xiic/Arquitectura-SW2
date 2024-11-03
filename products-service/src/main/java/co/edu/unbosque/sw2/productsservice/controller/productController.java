@@ -6,23 +6,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class productController {
-
-    @PostMapping("/getProducts")
-    public Product getProduct(Product product) {
-        return product;
-    }
-
-    @GetMapping("/getProduct")
-    public Product getProd(Product product) {
-        return product;
+    ArrayList<Product> products = new ArrayList<>();
+    @GetMapping("/getProducts")
+    public List<Product> getProducts(){
+        return products;
     }
 
     @PostMapping("/createProduct")
     public ResponseEntity<String> createProduct(@RequestBody Product product) {
-        new Product(product);
+        products.add(new Product(product));
         System.out.println("Product created");
         return ResponseEntity.ok("Creado");
 

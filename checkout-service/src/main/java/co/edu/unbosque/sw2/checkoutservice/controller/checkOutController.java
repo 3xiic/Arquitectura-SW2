@@ -5,6 +5,8 @@ import co.edu.unbosque.sw2.checkoutservice.model.Product;
 import co.edu.unbosque.sw2.checkoutservice.service.CheckoutInterface;
 import co.edu.unbosque.sw2.checkoutservice.service.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +24,15 @@ public class checkOutController {
     public checkOutController() {
 
     }
-
     @GetMapping("/viewCheckout")
-    public Checkout viewCheckout() {
-           return service.showCheckOut();
-
+    public ResponseEntity<?> viewCheckout() {
+        try {
+            Checkout checkout = service.showCheckOut();
+            return ResponseEntity.ok(checkout);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener el checkout");
+        }
     }
 
 

@@ -1,0 +1,39 @@
+server:
+  port: 8383
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway-service
+  cloud:
+    config:
+      import: 'optional:configserver:'
+      enabled: false
+    discovery:
+      serviceId: config-service
+      enabled: true
+    import-check:
+      enabled: false
+  gateway:
+    routes:
+      - id: checkout-service
+        uri: lb://checkout-service
+        predicates:
+          - Path=/checkout/**
+        filters:
+          - AddRequestHeader=x-request-from, gateway
+          - AddResponseHeader=x-response-from, gateway
+
+      - id: products-service
+        uri: lb://products-service
+        predicates:
+          - Path=/products/**
+        filters:
+          - AddRequestHeader=x-request-from, gateway
+          - AddResponseHeader=x-response-from, gateway
+info:
+  app:
+    name: Gateway
+    description: Taller SW2
+    version: 1.0
