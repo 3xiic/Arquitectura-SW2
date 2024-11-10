@@ -2,6 +2,11 @@ server:
   port: 8383
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:8080/realms/Realm1"
   main:
     web-application-type: reactive
   application:
@@ -32,6 +37,8 @@ spring:
         filters:
           - AddRequestHeader=x-request-from, gateway
           - AddResponseHeader=x-response-from, gateway
+    Default-filters:
+      - TokenRelay=
 info:
   app:
     name: Gateway
